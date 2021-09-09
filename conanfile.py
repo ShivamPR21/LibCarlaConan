@@ -74,10 +74,9 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/../CMakeLists.txt.in)''')
         if self._cmake:
             return self._cmake
         self._cmake = CMake(self, generator="Ninja", build_type="Client")
-        self._cmake.configure(source_folder=f"{self._source_folder}/cmake")
         self._cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = f"{self._source_folder}/ToolChain.cmake"
         self._cmake.definitions["CMAKE_EXPORT_COMPILE_COMMANDS"] = True
-        # self._cmake.definitions["CMAKE_BUIlD_TYPE"] = "Client"
+        self._cmake.configure(source_folder=f"{self._source_folder}/cmake")
         return self._cmake
 
     def build(self):
@@ -91,6 +90,3 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/../CMakeLists.txt.in)''')
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
         self.cpp_info.system_libs.append("pthread")
-        self.cpp_info.cxxflags = ["-std=c++14", "-pthread", "-fPIC", "-O3",
-                                  "-DNDEBUG", "-Werror", "-Wall", "-Wextra", "-Wno-class-memaccess",
-                                  "-Wno-deprecate", "d-copy", "-Wno-maybe-uninitialized"]
