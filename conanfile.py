@@ -13,7 +13,7 @@ class LibCarlaConan(ConanFile):
         "libpng/1.6.37",
         "gtest/1.10.0",
         "recastlib/0b13b0@libcarla/dev",
-        "rpclib/v2.2.1_c5@rpclib/dev"
+        "rpclib/v2.2.1_c5@libcarla/dev"
     ]
     description = "Carla CPP API"
     topics = ("CARLA", "Conan")
@@ -31,10 +31,12 @@ class LibCarlaConan(ConanFile):
     exports_sources = [
         "libcarla/ToolChain.cmake",
         "libcarla/CMakeLists.txt.in"
+        "deps/*"
     ]
 
     _cmake = None
     _source_folder = "libcarla"
+    _deps_folder = "deps"
 
     def config_options(self):
         if self.settings.os == "Windows":
